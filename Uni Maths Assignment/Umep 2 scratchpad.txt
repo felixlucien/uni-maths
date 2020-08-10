@@ -1,0 +1,126 @@
+$$
+c\odot (u\ast v)=
+\frac{(1+ u \ast v)^\alpha-(1- u \ast v)^\alpha}
+{(1+ u \ast v)^\alpha+(1- u \ast v)^\alpha}
+=
+\frac{
+\left(
+1+
+\frac{u+v}{1+uv}
+\right)^\alpha
+-
+\left(
+1-
+\frac{u+v}{1+uv}
+\right)^\alpha
+}{\left(
+1+
+\frac{u+v}{1+uv}
+\right)^\alpha
++
+\left(
+1-
+\frac{u+v}{1+uv}
+\right)^\alpha
+}
+=
+\frac{
+\left(
+\frac{1+uv+u+v}{1+uv}
+\right)^\alpha
+-
+\left(
+\frac{1+uv-u-v}{1+uv}
+\right)^\alpha
+}{\left(
+\frac{1+uv+u+v}{1+uv}
+\right)^\alpha
++
+\left(
+\frac{1+uv-u-v}{1+uv}
+\right)^\alpha
+}
+$$
+
+$$
+=
+\frac{
+\left(
+1+uv+u+v
+\right)^\alpha
+-
+\left(
+1+uv-u-v
+\right)^\alpha
+}{\left(
+1+uv+u+v
+\right)^\alpha
++
+\left(
+1+uv-u-v
+\right)^\alpha
+}
+=
+\frac{
+\left(
+(1+u)(1+v)
+\right)^\alpha
+-
+\left(
+(1-u)(1-v)
+\right)^\alpha
+}{\left(
+(1+u)(1+v)
+\right)^\alpha
++
+\left(
+(1-u)(1-v)
+\right)^\alpha
+}
+$$
+
+$$
+=
+\frac{
+(1+u)^\alpha(1+v)^\alpha
+-
+(1-u)^\alpha(1-v)^\alpha
+}{
+(1+u)^\alpha(1+v)^\alpha
++
+(1-u)^\alpha(1-v)^\alpha
+}
+$$
+
+\begin{align}
+(1+u)^\alpha=a \\
+(1-u)^\alpha=a' \\
+(1+v)^\alpha=b \\
+(1-v)^\alpha=b'
+\end{align}
+
+
+$$
+\therefore
+\frac{
+a\cdot b - a'\cdot b'
+}{
+a\cdot b + a'\cdot b'
+}
+?????????//
+$$
+
+
+
+
+
+
+
+\textbf{Axiom 8} $c\odot(u+v)$ = $c\odot u + c \odot v$\\
+\textbf{Axiom 9} $c\odot(u+v)$ = $c\odot u + c \odot v$\\
+\textbf{Axiom 10} $1\odot u=u$.\\
+$$
+1\odot u = \frac{(1+u)^1-(1-u)^1}{(1+u)^1+(1-u)^1}=\frac{2u}{2}=u
+\hspace{50pt}
+\text{(fulfills axiom 10)}
+$$

@@ -1,0 +1,218 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, mathtools, amssymb, stmaryrd}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arcsinh}{arcsinh} 
+
+\begin{document}
+UMEP Calculus \hfill Felix McCuaig \\
+Assignment 1
+
+\section*{Question 1}
+\textbf{Consider the function:}
+$$
+f(x)= 
+\begin{cases}
+ \frac{\log(1-2x)}{x} & x < 0 \\
+ a & x = 0 \\
+ x^2\cos\left( \frac{1}{x}\right) & x > 0 \\
+\end{cases}
+$$
+\textbf{For which values of $a, b \in \mathbb{R}$ is $f$ continuous at $x=0$?}\\
+\medskip
+At the point $x=0$, the following should be true for $f$ to be continuous:\\
+$$
+\lim_{x\rightarrow 0^-}\frac{\log(1-2x)}{x}=\lim_{x\rightarrow 0}a=\lim_{x\rightarrow 0^+}x^2\cos\left( \frac{1}{x} \right)
+$$
+We can't just take the limits of $f$ when $x>0$ and $x<0$ directly, we need to use some tricks first.\\
+\smallskip
+For $f(x)$ when $x<0$, we can use l'hopital's rule, take the derivative of both the top and the bottom and happy days:
+$$
+\lim_{x \rightarrow 0^-}\frac{\log(1-2x)}{x}=\lim_{x \rightarrow 0^-}\frac{\frac{-2}{1-2x}}{1}=\lim_{x \rightarrow 0^-}\frac{-2}{1-2x}=-2
+$$ 
+When $x=0$, evaluating the limit yields:
+$$
+\lim_{x\rightarrow 0}a=a
+$$
+Finally to evaluate when $x>0$, we can use the sandwich theorem:
+$$
+\lim_{x \rightarrow 0^+}x^2\cos \left( \frac{1}{x} \right)+b
+$$ 
+$$
+x^2+b \geq x^2\cos \left( \frac{1}{x} \right)+b \geq -x^2+b
+$$
+Then:
+$$
+\lim_{x \rightarrow 0^+}x^2+b=\lim_{x \rightarrow 0^+}x^2\cos \left( \frac{1}{x} \right)+b=\lim_{x \rightarrow 0^+}-x^2+b=b
+$$
+Therefore, combining our results, we find that:
+$$
+-2=a=b
+$$
+So
+$$
+a = -2 \hspace{20px} b = -2
+$$
+\section*{Question 2}
+\textbf{Evaluate the following integrals:}\\
+\medskip
+\textbf{(a)}\\
+$$
+\int (\log x)^2 dx
+$$
+Using integration by parts we find:\\
+$$
+\int u \ dv = uv - \int v \ du
+$$
+
+$$
+u=\log^2 x \hspace{20px} du=\frac{2\log x}{x} \text{ and } dv=1 \ dx \hspace{20px} v=x
+$$
+
+$$
+\therefore \int \log^2 x \ dx = x \log^2 x - \int 2\log x \ dx
+$$
+Next, we must take the integral:
+$$
+\int \log x \ dx
+$$
+So:
+$$
+u = \log x \hspace{20px} du = \frac{1}{x} \text{ and } dv = \ dx \hspace{20px} v = x 
+$$
+$$
+\therefore \int \log x = x \log x - x
+$$
+Therefore, if we put all the parts together we find that:
+\begin{align*}
+	\int \log^2 x \ dx =& x \log ^2 x - 2(x \log x - x) + C\\
+	=& x \log ^2 x - 2x \log x + 2x + C\\
+	=& x(\log ^2 x -2 \log x + 2) + C
+\end{align*}
+Where $C \in \mathbb{R}$.\\
+\bigskip
+\textbf{(b)}\\
+$$
+\int_{0}^{1}\frac{\cosh x}{\sinh^2 x + 2 \sinh x + 2}dx
+$$
+Since:
+$$
+\frac{dy}{dx}\sinh x=\cosh x
+$$
+We can apply the substitution let $u=\sinh x$, $du = \cosh x \ dx$.\\
+Don't forget the terminals: $\sinh 1$ and $\sinh 0=0$
+\begin{align*}
+	=&\int_{0}^{\sinh 1}\frac{1}{u^2+2u+2}du\\
+	=&\int_{0}^{\sinh 1}\frac{1}{(u+1)^2+1}du\\
+	=&\left[ \arctan(u+1) \right]^{\sinh 1}_{0}\\
+	=& \arctan(\sinh 1 +1) - \frac{\pi}{4}
+\end{align*}
+\section*{Question 3}
+\textbf{(a) Show that}
+$$
+\int \sec^n x \ dx = \frac{1}{n - 1} \tan x \sec^{n-2} x + \frac{n-2}{n-1}\int \sec^{n-2} x \ dx
+$$
+We can use integration by parts to determine the reduction of $\int \sec^n x \ dx$:
+$$
+\int \sec^n x \ dx = \int \sec^2 x \sec^{n-2}x \ dx
+$$
+If we let:
+$$
+du = \sec^2 x \ dx \hspace{20px} u = \tan x \text{ and } v = \sec^{n-2}x \hspace{20px} dv= (n-2)\sin x \cos x \sec^n x \ dx
+$$
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - \int \tan x (n-2)\sin x \cos x \sec^n x \ dx
+$$
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - (n-2) \int \frac{\sin^2 x}{\cos^n x} \ dx
+$$
+Recall that $\sin^2 x + \cos^2 x = 1$ then:
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - (n-2) \int \frac{1 - \cos^2 x}{\cos^n x} \ dx
+$$
+
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - (n-2) \left[ \int \frac{1}{\cos^n x} \ dx - \int \frac{\cos^2 x}{\cos^n x} \ dx \right]
+$$
+
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - (n-2) \left[ \int \sec^n x \ dx - \int \sec^{n-2} x \ dx \right]
+$$
+
+$$
+\therefore \int \sec^n x \ dx = \tan x \sec^{n-2} x - (n-2)\int \sec^n x \ dx + (n-2)\int \sec^{n-2} x \ dx
+$$
+Rearrange to get all our $\sec^n x$ to one side:
+$$
+\therefore \int \sec^n x \ dx + (n-2)\int \sec^n x \ dx  = \tan x \sec^{n-2} x + (n-2)\int \sec^{n-2} x \ dx
+$$
+And factorize to yield:
+$$
+\therefore \int \sec^n x \ dx (n-2+1) = \tan x \sec^{n-2} x + (n-2)\int \sec^{n-2} x \ dx
+$$
+Which yields our final formula:
+$$
+\therefore \int \sec^n x \ dx = \frac{1}{n-1}\tan x \sec^{n-2} x + \frac{n-2}{n-1}\int \sec^{n-2} x \ dx
+$$
+\textbf{(b) Evaluate}\\
+$$
+\int \sec^5 x \ dx
+$$
+Use the formula from \textbf{(a)}:
+$$
+\int \sec^5 x \ dx= \frac{1}{4}\tan x \sec^3 x + \frac{3}{4}\int \sec^3 x \ dx
+$$
+Apply again to $\sec^3 x$:
+$$
+\int \sec^3 x \ dx= \frac{1}{2}\tan x \sec x + \frac{3}{4}\int \sec x \ dx
+$$
+We know:
+$$
+\int \sec x \ dx = \log |\sec x + \tan x | + C
+$$
+Therefore:
+$$
+\int \sec^5 x \ dx = \frac{1}{4}\tan x \sec^3 x + \frac{3}{8}\tan x \sec x + \frac{3}{4}\log |\sec x + \tan x | + C
+$$
+Where $C \in \mathbb{R}$.
+\section*{Question 4}
+\textbf{Use an appropriate substitution to evaluate the following integral}
+$$
+\int \sqrt{x^2+4x+3} \ dx
+$$
+First let's express as a perfect square:
+$$
+\int \sqrt{(x+2)^2-1} \ dx
+$$
+Now, let $x+2=\cosh u$
+$$
+\frac{dx}{du}=\sinh u
+$$
+$$
+\int \sqrt{\cosh^2 u -1} \sinh u \ du
+$$
+Remembering that $\cosh^2 u - \sinh^2 u=1$:
+$$
+\int \sqrt{\sinh^2 u} \sinh u \ du
+$$
+
+$$
+\int \sinh^2 u \ du
+$$
+Rearranging the formula $\cosh 2u = 1 + 2\sinh^2 u$:
+$$
+\int \frac{\cosh 2u -1}{2} \ du = \frac{1}{2}\int \cosh 2u -1 \ du
+$$
+$$
+\frac{1}{2}\left( \frac{1}{2}\sinh 2u - u \right)+C
+$$
+Recall that $u=\arccosh(x+2)$\\
+$$
+\frac{1}{4}\sinh (2\arccosh(x+2))-\frac{\arccosh(x+2)}{2}+C
+$$
+Where $C \in \mathbb{R}$.
+\end{document}

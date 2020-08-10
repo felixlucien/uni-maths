@@ -1,0 +1,827 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, mathtools, amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage{tikz}
+\usepackage{undertilde}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\renewcommand{\Bigg}{\bBigg@{2.5}}
+
+\begin{document}
+
+UMEP Linear Algebra \hfill Felix McCuaig \\
+Assignment 2
+
+\section*{Question 1}
+
+$$
+A=
+\begin{bmatrix}
+   2 & 3 & 5 & 7\\
+   3 & 5 & 7 & 9\\
+   5 & 7 & 9 & 11\\
+\end{bmatrix}
+$$
+
+(\textbf{a}) What is the rank of $A$.\\
+
+$$
+\begin{bmatrix}
+   2 & 3 & 5 & 7\\
+   3 & 5 & 7 & 9\\
+   5 & 7 & 9 & 11\\
+\end{bmatrix} \overset{2r_2-3r_1}{\longrightarrow} 
+\begin{bmatrix}
+   2 & 3 & 5 & 7\\
+   0 & 1 & -1 & -3\\
+   5 & 7 & 9 & 11\\
+\end{bmatrix} \overset{2r_3-5r_1}{\longrightarrow} 
+\begin{bmatrix}
+    2 & 3 & 5 & 7\\
+   0 & 1 & -1 & -3\\
+   0 & -1 & -7 & -13\\
+\end{bmatrix} \overset{r_3+r_2}{\longrightarrow} 
+\begin{bmatrix}
+    2 & 3 & 5 & 7\\
+   0 & 1 & -1 & -3\\
+   0 & 0 & -8 & -16\\
+\end{bmatrix}
+$$
+
+It is clear that in row echelon form, there are $3$ pivots, the dimension of the row space is $3$ and therefore the rank is $3$.\\
+\medskip
+(\textbf{b}) Find a basis for the solution space of $A$.\\
+$$
+\begin{bmatrix}
+   2 & 3 & 5 & 7\\
+   3 & 5 & 7 & 9\\
+   5 & 7 & 9 & 11\\
+\end{bmatrix}
+\begin{bmatrix}
+   x_1 \\
+   x_2 \\
+   x_3 \\
+   x_4 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+   0 \\
+   0 \\
+   0 \\
+\end{bmatrix}
+$$
+As we have seen before, this matrix $A$ is reduced to:
+$$
+\begin{bmatrix}[cccc|c]
+   2 & 3 & 5 & 7 & 0\\
+   0 & 1 & -1 & -3 & 0\\
+   0 & 0 & 1 & 2 & 0\\
+\end{bmatrix}
+\hspace{20pt}
+\therefore
+\begin{aligned}
+&2x_1& + &3x_2& + &5x_3& &=& 0 \\
+&& &x_2& - &x_3& - 3x_4 &=& 0 \\
+&& && &x_3& + 2x_4 &=& 0
+\end{aligned}
+\hspace{20pt}
+\therefore
+x_3 = -2x_4
+$$
+By substituting $x_3=-2x_4$ back into the other equations we find we only have two remaining variables:
+
+$$
+\begin{aligned}
+2x_1 + 3x_2 - 10x_4 &=& 0 \\
+x_2 &=& 5x_4 \\
+x_3 &=& -2x_4
+\end{aligned}
+\hspace{20pt}
+\therefore
+\begin{aligned}
+2x_1 &=& -13x_4 \\
+x_2 &=& 5x_4 \\
+x_3 &=& -2x_4
+\end{aligned}
+$$
+If we let $x_4 = a$ then:
+$$
+\begin{bmatrix}
+   x_1 \\
+   x_2 \\
+   x_3 \\
+   x_4 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+   \frac{-13}{2} \\
+   5 \\
+   -2 \\
+   1 \\
+\end{bmatrix}\cdot a
+$$
+Therefore a basis $B$ for the solution space of the matrix $A$ is:
+$$
+B = 
+\left\{
+\left(
+\frac{-13}{2}, 5, -2, 1
+\right)
+\right\}
+$$
+\medskip
+(\textbf{c}) Find a basis for the row space of $A$.\\
+By row reducing $A$ as we have previously seen:
+$$
+\begin{bmatrix}
+   2 & 3 & 5 & 7 \\
+   3 & 5 & 7 & 9 \\
+   5 & 7 & 9 & 11 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}
+   2 & 3 & 5 & 7 \\
+   0 & 1 & -1 & -3 \\
+   0 & 0 & -8 & -16 \\
+\end{bmatrix}
+\hspace{20pt}
+\therefore
+B = 
+\left\{
+\begin{bmatrix}
+   2 \\
+   3 \\
+   5 \\
+   7 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+   0 \\
+   1 \\
+   -1 \\
+   -3 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+   0 \\
+   0 \\
+   -8 \\
+   -16 \\
+\end{bmatrix}
+\right\}
+$$
+\newpage
+(\textbf{d}) State the theorem relating the dimensions of the solution space to the rank of the matrix. Verify that this theorem holds for $A$.\\
+\medskip
+The rank-nullity theorem states that: $Rank(A)+Nullity(A)=dim\:V$. In the case of $A$:
+$$
+Rank(A)=3,\;Nullity(A)=1,\;3+1=4=dim\:V
+$$
+
+\section*{Question 2}
+
+Let $V=(-1,1)=\{x \in \mathbb{R}\hspace{5px}| -1 < x < 1 \}$, and define the operations \\
+$$
+x \ast y = \frac{x+y}{1+xy}
+\hspace{100pt}
+\text{(vector addition)}
+$$ 
+
+$$
+a \odot x = \frac{(1+x)^{\alpha} - (1-x)^{\alpha}}{(1+x)^{\alpha} + (1-x)^{\alpha}}
+\hspace{60pt}
+\text{(scalar multiplication)}
+$$
+Where $x,y \in V$ and $a \in \mathbb{R}$. Determine whether $V$, with the operations listed is a vector space over $\mathbb{R}$.\\
+\medskip
+\textbf{Axiom 1} ($x+y$ is in $V$)
+$$
+x\ast y=\frac{x+y}{(1-x)(1-y) + x + y}
+$$
+\begin{center}
+%For $x,y \in (-1,1)$\hspace{120pt} (fulfills axiom 1)\\
+As $x+y \to 2$, $x\ast y \to 1$.\\
+As $x+y \to -2$, $x\ast y \to -1$.\\
+\end{center}
+\medskip
+\textbf{Axiom 2} ($x+y = y+x$)
+$$
+x\ast y=\frac{x+y}{1+x\cdot y}=\frac{y+x}{1+y\cdot x}=y\ast x
+\hspace{60pt}
+\text{(fulfills axiom 2)}
+$$
+\medskip
+\textbf{Axiom 3} $(u+v)+w = u+(v+w)$
+$$
+(u \ast v) \ast w = \left(\frac{u + v}{1 + u \cdot v}\right)\ast w 
+= \frac{\frac{u+v}{1+ uv} + w}{1 + w\frac{u+v}{1+ uv}}
+= \frac{\frac{u+v}{1+uv} + w\frac{1+uv}{1+uv}}{\frac{1+uv}{1+uv} + w \frac{u+v}{1+uv}}
+= \frac{u+v+w+uvw}{1+uv+wu+wv}
+= \frac{v+w+u(1+wv)}{1+wv+u(w+v)}
+$$
+
+$$
+\therefore
+\frac{\frac{v+w}{1+wv} + v}{1+u\frac{w+v}{1+vw}}=u\ast \frac{w+v}{1+wv}
+=u\ast (w \ast v)
+\hspace{40px}
+\text{(fulfills axiom 3)}
+$$
+\textbf{Axiom 4} There is a zero vector in $V$ where $u+0=u$
+$$
+0 \ast u = \frac{u+0}{1 + u\cdot 0}= \frac{u}{1}= u
+\hspace{110px}
+\text{(fulfills axiom 4)}
+$$
+\textbf{Axiom 5} For each vector $u$ in $V$ there is a vector $-u$ satisfying $u+(-u)=0$.
+$$
+u\ast-u=\frac{u-u}{1+u^2}=\frac{0}{1=u^2}=0
+\hspace{90pt}
+\text{(fulfills axiom 5)}
+$$
+\textbf{Axiom 6} $\alpha\odot x$ is in $V$
+$$\text{As } x \to 1,
+\hspace{20pt} (1+x)^\alpha\to2^\alpha
+\hspace{20pt} (1-x)^\alpha\to0
+\hspace{20pt} \therefore
+\frac{2^\alpha-0}{2^\alpha + 0}\to1
+$$
+
+$$\text{As } x \to -1,
+\hspace{20pt} (1+x)^\alpha\to0
+\hspace{20pt} (1-x)^\alpha\to2^\alpha
+\hspace{20pt} \therefore
+\frac{0-2^\alpha}{0 + 2^\alpha}\to-1
+$$
+
+$$
+\text{When } x=0,\hspace{20pt} \frac{(1)^\alpha-(1)^\alpha}{(1)^\alpha+(1)^\alpha}=0. \hspace{70pt} \text{(fulfills axiom 6)}
+$$
+\newpage
+\textbf{Axiom 7} $\alpha \odot(u+v)$ = $\alpha \odot u + \alpha \odot v$\\
+Let $u=\frac{1}{4}$ and $v=\frac{1}{2}$:\\
+$$
+u \ast v =
+\frac{\frac{1}{2}+\frac{1}{4}}{1+\frac{1}{2}\cdot \frac{1}{4}} 
+=\frac{\frac{3}{4}}{\frac{9}{8}}
+=\frac{2}{3}
+$$
+Now, let $\alpha=4$:
+$$
+4
+\odot
+\left(\frac{1}{2}\ast \frac{1}{4}\right)
+=
+\frac{
+\left(1+\frac{2}{3}\right)^4-\left(1-\frac{2}{3}\right)^4
+}{
+\left(1+\frac{2}{3}\right)^4+\left(1-\frac{2}{3}\right)^4
+}
+=
+\frac{312}{313}
+$$
+Now, if we take $\alpha\odot \frac{1}{2} + \alpha\odot \frac{1}{4}$:
+
+$$
+4\odot \frac{1}{2}
++
+4\odot \frac{1}{4}
+=
+\frac{
+\left(
+1+\frac{1}{2}
+\right)^4
+-
+\left(
+1-\frac{1}{2}
+\right)^4
+}{
+\left(
+1+\frac{1}{2}
+\right)^4
++
+\left(
+1-\frac{1}{2}
+\right)^4
+}
++
+\frac{
+\left(
+1+\frac{1}{4}
+\right)^4
+-
+\left(
+1-\frac{1}{4}
+\right)^4
+}{
+\left(
+1+\frac{1}{4}
+\right)^4
++
+\left(
+1-\frac{1}{4}
+\right)^4
+}
+=\frac{25272}{14473}
+$$
+Clearly, they are not equal and therefore $V$ doesn't fulfil the requirements to be a vector space.
+\section*{Question 3}
+(\textbf{a}) Find a subset of the set
+$$
+\mathcal{S}=\{(0, -1, -3, 3), (-1, -1, -3, 2), (3, 1, 3, 0), (0, -1, -2, 1)\}
+$$
+of vectors in $\mathbb{R}^4$, that form a basis for $Span(\mathcal{S})$.\\
+\medskip
+The basis vectors can be described as a matrix:\\
+$$
+\mathcal{S}=
+\begin{bmatrix}
+   0 & -1 & -3 & 3 \\
+   -1 & -1 & -3 & 2 \\
+   3 & 1 & 3 & 0 \\
+   0 & -1 & -2 & 1
+\end{bmatrix}
+$$
+When row-reduced this becomes:
+$$
+\sim
+\begin{bmatrix}
+   1 & \frac{1}{3} & 1 & 0 \\
+   0 & 1 & 3 & -3 \\
+   0 & 0 & 1 & -2 \\
+   0 & 0 & 0 & 0
+\end{bmatrix}
+\sim
+\begin{bmatrix}
+   1 & 0 & 0 & 1 \\
+   0 & 1 & 0 & 3 \\
+   0 & 0 & 1 & -2 \\
+   0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+Therefore a subset of $\mathcal{S}$, designated as basis $\mathcal{B}$ which forms a subspace of $\mathbb{R}^3$ in $\mathbb{R}^4$ and is a basis for $Span(\mathcal{S})$ is:
+$$
+\mathcal{B}=\left\{
+\begin{bmatrix}
+   1 \\
+   0 \\
+   0 \\
+   1
+\end{bmatrix},
+\begin{bmatrix}
+   0 \\
+   1 \\
+   0 \\
+   3
+\end{bmatrix},
+\begin{bmatrix}
+   0 \\
+   0 \\
+   1 \\
+   -2
+\end{bmatrix}
+\right\}
+$$
+(\textbf{b}) Show that the set
+$$
+\mathcal{B}=\{(-1,-3,-8,6),(-1,0,-1,1),(-1,-2,-6,5)\}
+$$
+is another basis for $Span(\mathcal{S})$.\\
+\medskip
+$\mathcal{B}$ can be described in matrix form and let this new basis be $\mathcal{M}$:
+$$
+\mathcal{M}=
+\begin{bmatrix}
+   -1 & -3 & -8 & 6 \\	
+   -1 & -0 & -1 & 1 \\
+   -1 & -2 & -6 & 5 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}
+   1 & 0 & 0 & 1 \\	
+   0 & 1 & 0 & 3 \\
+   0 & 0 & 1 & -2 \\
+\end{bmatrix}
+$$
+$$
+\mathcal{M}=
+\left\{
+\begin{bmatrix}
+   1 \\
+   0 \\
+   0 \\
+   1
+\end{bmatrix},
+\begin{bmatrix}
+   0 \\
+   1 \\
+   0 \\
+   3
+\end{bmatrix},
+\begin{bmatrix}
+   0 \\
+   0 \\
+   1 \\
+   -2
+\end{bmatrix}
+\right\}
+$$
+It is clear this is similar to the result we found in (\textbf{a}), this set is indeed another basis for $Span(\mathcal{S})$.
+(\textbf{c}) Let $\mathbf{v}=(3,7,20,-16)\in \mathbb{R}^4$. Write the coordinate vector of $\mathbf{v}$ with respect to\\
+\hspace{40px}(i) the basis found in part (\textbf{a});
+$$
+\begin{bmatrix}
+   1 & 0 & 0 \\
+   0 & 1 & 0 \\
+   0 & 0 & 1 \\
+   1 & 3 & -2
+\end{bmatrix}
+\begin{bmatrix}
+   a \\
+   b \\
+   c
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 3 \\
+ 7 \\
+ 20 \\
+ -16
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+    1 & 0 & 0 & 3 \\
+   0 & 1 & 0 & 7\\
+   0 & 0 & 1 & 20\\
+   1 & 3 & -2 & -16
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+    1 & 0 & 0 & 3 \\
+   0 & 1 & 0 & 7\\
+   0 & 0 & 1 & 20\\
+   0 & 0 & 0 & 0
+\end{bmatrix}
+\therefore a=3, b=7,c=20
+$$
+
+$$
+\therefore \mathbf{v}=
+3
+\begin{bmatrix}
+   1 \\
+   0 \\
+   0 \\
+   1
+\end{bmatrix}
++7
+\begin{bmatrix}
+   0 \\
+   1 \\
+   0 \\
+   3
+\end{bmatrix}
++20
+\begin{bmatrix}
+   0 \\
+   0 \\
+   1 \\
+   -2
+\end{bmatrix}
+$$
+\hspace{40pt}
+(ii) the basis $\mathcal{B}$.\\
+$$
+\mathbf{v}=
+a
+\begin{bmatrix}
+   -1 & -1 & -1 \\
+   -3 & 0 & -2 \\
+   -8 & -1 & -6 \\
+   0 & 1 & 5
+\end{bmatrix}
+\begin{bmatrix}
+	a \\
+	b \\
+	c
+\end{bmatrix}
+=
+\begin{bmatrix}
+   3 \\
+   7 \\
+   20 \\
+   -16
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   -3 & 0 & -2 & 7 \\
+   -8 & -1 & -6 & 20 \\
+   6 & 1 & 5 & -16 \\
+\end{bmatrix} \overset{r_4+2r_2}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   -3 & 0 & -2 & 7 \\
+   -8 & -1 & -6 & 20 \\
+   0 & 1 & 1 & -2 \\
+\end{bmatrix} \overset{r_2-3r_1}{\longrightarrow}
+$$
+
+$$
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   0 & 3 & 1 & -5 \\
+   -8 & -1 & -6 & 20 \\
+   0 & 1 & 1 & -2 \\
+\end{bmatrix} \overset{r_3-8r_1}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   0 & 3 & 1 & -5 \\
+   0 & 7 & 2 & -4 \\
+   0 & 1 & 1 & -2 \\
+\end{bmatrix} \overset{r_3-2r_4}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   0 & 3 & 1 & -5 \\
+   0 & 5 & 0 & 0 \\
+   0 & 1 & 1 & -2 \\
+\end{bmatrix} \overset{r_2-r_4}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   0 & 2 & 0 & -3 \\
+   0 & 5 & 0 & 0 \\
+   0 & 1 & 1 & -2 \\
+\end{bmatrix}
+$$
+
+$$
+ \overset{2r_4-r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & 3 \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 1 & -2 \\
+   0 & 2 & 0 & -3 \\
+\end{bmatrix} \overset{r_1+r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & 0 & -1 & 3 \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 1 & -2 \\
+   0 & 2 & 0 & -3 \\
+\end{bmatrix} \overset{r_1+r_3}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & 0 & 0 & 1 \\
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 1 & -2 \\
+   0 & 2 & 0 & -3 \\
+\end{bmatrix}
+\therefore
+a=-1, b=0, c=-2
+$$
+
+To test these values for $a,b,c$ we can back-substitute them into the original equation.
+$$
+\mathbf{v}=
+-1
+\begin{bmatrix}
+   -1 \\
+   -3 \\
+   -8 \\
+   6
+\end{bmatrix}
++0
+\begin{bmatrix}
+   -1 \\
+   0 \\
+   -1 \\
+   1
+\end{bmatrix}
+-2
+\begin{bmatrix}
+   -1 \\
+   -2 \\
+   -6 \\
+   5
+\end{bmatrix}
+=
+\begin{bmatrix}
+   1 + 2 \\
+   3 + 4 \\
+   8 + 12 \\
+   -6 -10
+\end{bmatrix}
+=
+\begin{bmatrix}
+   3 \\
+   7 \\
+   20 \\
+   -16
+\end{bmatrix}
+$$
+(\textbf{d}) Consider the set of polynomials
+$$
+\mathcal{P}=\{-1-3x-8x^2+6x^3,\quad -1-x^2+x^3,\quad -1-2x-6x^2+5x^3\}
+$$
+Can the polynomial $p(x)=-3-5x-15x^2+12x^3$ be written as a linear combination of the polynomials in $\mathcal{P}$ in more than one way? 
+$$
+\begin{bmatrix}
+   -1 & -1 & -1\\
+   -3 & 0 & -2\\
+   -8 & -1 & -6\\
+   6 & 1 & 5
+\end{bmatrix}
+\begin{bmatrix}
+  a \\
+  b \\
+  c
+\end{bmatrix}
+=
+\begin{bmatrix}
+   -3 \\
+   -5 \\
+   -15 \\
+   12 
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   -3 & 0 & -2 & -5 \\
+   -8 & -1 & -6 & -15 \\
+   6 & 1 & 5 & 12 \\
+\end{bmatrix} \overset{r_4+2r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   -3 & 0 & -2 & -5 \\
+   -8 & -1 & -6 & -15 \\
+   0 & 1 & 1 & 2 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{r_2-3r_1}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   -3 & 0 & -2 & -5 \\
+   -8 & -1 & -6 & -15 \\
+  0 & 1 & 1 & 2 \\
+\end{bmatrix} \overset{r_3-8r_1}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   -3 & 0 & -2 & -5 \\
+   0 & 7 & 2 & 9 \\
+   0 & 1 & -3 & 12 \\
+\end{bmatrix} \overset{r_2-3r_1}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   0 & 3 & 1 & 4\\
+   0 & 7 & 2 & 9 \\
+   0 & 1 & 1 & 2 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{7r_2-3r_3}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   0 & 0 & 1 & 1 \\
+   0 & 7 & 2 & 9 \\
+   0 & 1 & 1 & 2 \\
+\end{bmatrix} \overset{r_3-2r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   -1 & -1 & -1 & -3 \\
+   0 & 0 & 1 & 1 \\
+   0 & 7 & 0 & 7 \\
+  0 & 1 & 1 & 2 \\
+\end{bmatrix} \overset{r_4-(r_2+r_3)}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   1 & 1 & 1 & 3 \\
+   0 & 1 & 0 & 1\\
+   0 & 0 & 1 & 1 \\
+   0 & 0 & 0 & 0 \\
+\end{bmatrix}
+$$
+$$
+\overset{r_1-(r_2+r_3)}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   1 & 0 & 0 & 1 \\
+   0 & 1 & 0 & 1\\
+   0 & 0 & 1 & 1 \\
+   0 & 0 & 0 & 0 \\
+\end{bmatrix}
+\therefore a=1, b=1, c=1
+$$
+To check that this satisfies $p(x)$, we can substitute the values into the original equation:
+$$
+\begin{bmatrix}
+   -1 \\
+   -3 \\
+   -8 \\
+   6
+\end{bmatrix}
++
+\begin{bmatrix}
+   -1 \\
+   0 \\
+   -1 \\
+   1
+\end{bmatrix}
++
+\begin{bmatrix}
+   -1 \\
+   -2 \\
+   -6 \\
+   6
+\end{bmatrix}
+=
+\begin{bmatrix}
+   -3 \\
+   -5 \\
+   -15 \\
+   12 \\
+\end{bmatrix}
+= p(x)
+$$
+Since the equation above has a single solution, there is only one way $p(x)$ can be written in terms of $\mathcal{P}$.
+\section*{Question 4}
+Let $V$ be a finite dimensional vector space over $\mathbb{R}$ with an inner product $\langle-,-\rangle : V \times V \rightarrow V$.\\
+Let $W$ be a subspace of $V$. Define the set\\
+$$
+W^\bot=\{v \in V \: | \: \langle v,w \rangle = 0 \text{ for all } w \in W \}
+$$\\
+\medskip
+(\textbf{a}) Show that $W^\bot$ is a subspace of $V$.\\
+\medskip
+Let $\{v_1,v_2,w_1\}\in   W^\bot$
+$$
+\textbf{(1)}
+\hspace{20pt}
+\langle
+v_1 + v_2, w_1
+\rangle
+=
+\langle
+v_1, w_1
+\rangle
++
+\langle
+v_2, w_1
+\rangle
+=
+0+0=0
+\hspace{40pt}
+\therefore
+\text{(Closed under addition)}
+$$
+
+$$
+\textbf{(2)}
+\hspace{20pt}
+\alpha \cdot \langle v_1, w_1 \rangle = \alpha \cdot 0 = 0 \hspace{130pt} \therefore \text{(Closed under multiplication)}
+$$
+
+$$
+\textbf{(3)}
+\hspace{20pt}
+\langle v_1, w_1 \rangle = 0 \hspace{270pt} \therefore \text{(Non empty)}
+$$ \\
+\medskip
+(\textbf{b}) Prove that $dim\;W + dim\;W^\bot = dim\;V$ \\
+\medskip
+Recalling the rank nullity theorem from earlier:
+$$
+	rank\;A+Nullity\;A=dim\;V
+$$
+Where $V$ is some vector space over $\mathbb{R}^n$.\\
+Suppose we create a matrix $B$ which spans $W$.
+$$
+	B=
+	\begin{bmatrix}
+		\mathbf{v_1} & \mathbf{v_2} & \cdots & \mathbf{v_n} 	
+	\end{bmatrix}
+$$
+
+$$
+	\therefore rank\;B^T+nullity\;B^T=dim\;V
+$$
+But $rank\;B^T=rank\;B$, so:\\
+$$
+	\therefore rank\;B +nullity\;B^T=dim\;V
+$$
+
+Rank of $A$ is just the dimension of the column space of $A$ and nullity the dimension of the null space so:\\
+$$
+	\therefore dim\;C(A)+dim\;N(A^T)=dim\;V
+$$
+We can recall that $C(A)$ spans $W$ and $N(A^T)=C(A)^\bot=W^\bot$.
+$$
+	\therefore dim\; W + dim\;W^\bot =dim \; V
+$$
+
+\end{document}

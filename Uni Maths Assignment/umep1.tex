@@ -1,0 +1,492 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, mathtools, amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage{tikz}
+\usepackage{undertilde}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\begin{document}
+UMEP Linear Algebra \hfill Felix McCuaig \\
+Assignment 1
+
+\section*{Question 1}
+For the system of equations:
+
+\begin{align*}
+\begin{aligned}
+3tx + (t+12)y + (t-3)z &=& 3 \\
+3x + (t-3)y + z &=& 3t \\
+x+y+3z &=& 2 \\
+\end{aligned} \hspace*{20px}
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   3 & t-3 & 1 & 3t \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix}
+\end{align*}
+
+(\textbf{a}) Find the values of t for which the system is consistent.\\
+\medskip
+Display in augmented matrix form.
+Use elementary operations for row echelon form.
+$$
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   3 & t-3 & 1 & 3t \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix} \overset{r_2-3r_3}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix} \overset{r_3\cdot3t}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   3t & 3t & 9t & 6t \\
+\end{bmatrix}
+$$
+
+$$\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   3t & 3t & 9t & 6t \\
+\end{bmatrix} \overset{r_3-r_1}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   0 & 2t-12 & 8t+3 & 6t-3 \\
+\end{bmatrix} \overset{r_3-2r_2}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   0 & 0 & 8t+19 & 9 \\
+\end{bmatrix}
+$$
+Now it becomes apparent that if $t=\frac{-19}{8}$ the system is inconsistent. However, the other values of t for which the system is inconsistent are not so clear. Now if we let $A$ be the coefficient matrix, we can solve $Det(A)=0$ for $t$ we could find other values of $t$ for which the system is inconsistent. For this upper triangular matrix, we can simply multiply along the diagonal like so:
+$$
+A = 
+\begin{bmatrix}
+   3t & t+12 & t-3 \\
+   0 & t-6 & -8  \\
+   0 & 0 & 8t+19 \\
+\end{bmatrix}
+$$
+$$
+Det(A)=0 \hspace{20px}
+\therefore
+\begin{vmatrix}
+   3t & t+12 & t-3\\
+   0 & t-6 & -8\\
+   0 & 0 & 8t+19\\
+\end{vmatrix} = 0
+\hspace*{20pt}
+\therefore(8t+19)\cdot(3t)\cdot(t-6)=0 
+\hspace*{20pt}
+\therefore t=\frac{-19}{8}, 0, 6
+$$
+Hence, the system is consistent when $t \in \mathbb{R} \setminus \{\frac{-19}{8},6\}$ \\
+\medskip
+(\textbf{b}) Now, we can sub in our values for $t$ to determine if they will yield more than one solution.
+$$
+t = \frac{-19}{8}
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot\frac{-19}{8} & \frac{-19}{8}+12 & \frac{-19}{8}-3 & 3 \\
+   0 & \frac{-19}{8}-6 & -8 & 3\cdot\frac{-19}{8}-6 \\
+   0 & 0 & 8\cdot\frac{-19}{8}+19 & 9 \\
+\end{bmatrix}  
+\sim
+\begin{bmatrix}[ccc|c]
+   3\cdot\frac{-19}{8} & \frac{-19}{8}+12 & \frac{-19}{8}-3 & 3 \\
+   0 & \frac{-19}{8}-6 & -8 & 3\cdot\frac{-19}{8}-6 \\
+   0 & 0 & 0 & 9 \\
+\end{bmatrix}
+$$
+When $t=\frac{-19}{8}$ there is no solution.
+$$
+t = 6
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot6 & 6+12 & 6-3 & 3 \\
+   0 & 6-6 & -8 & 3\cdot6-6 \\
+   0 & 0 & 8\cdot6+19 & 9 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+  18 & 18 & 3 & 3 \\
+   0 & 0 & -8 & 12 \\
+   0 & 0 & 67 & 9 \\
+\end{bmatrix}
+\overset{r_2\cdot\frac{67}{8}}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  18 & 18 & 3 & 3 \\
+   0 & 0 & -67 & \frac{201}{2} \\
+   0 & 0 & 67 & 9 \\
+\end{bmatrix}
+$$
+\newpage
+When $t=6$ there is no solution.
+$$
+t = 0
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot0 & 0+12 & 0-3 & 3 \\
+   0 & 0-6 & -8 & 3\cdot0-6 \\
+   0 & 0 & 8\cdot0+19 & 9 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+  0 & 12 & -3 & 3 \\
+   0 & -6 & -8 & -6 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+\overset{r_2\cdot2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   0 & 12 & -3 & 3 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{r_1+r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & -19 & -9 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix} \overset{r_1+r_3}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & 0 & 0 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix} \overset{r_2\div4}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & 0 & 0 \\
+   0 & -3 & -4 & -3 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+$$
+$$
+\begin{aligned}
+-3y-4z&=&-3 \\
+19z&=&9
+\end{aligned}
+\hspace*{20px}
+\therefore z=\frac{9}{19}
+\hspace*{20px}
+\therefore -3y-4\cdot\frac{9}{19}= -3
+\hspace*{20px}
+\therefore -3y=\frac{-21}{19} 
+\hspace*{20px}
+\therefore y=\frac{7}{19}
+$$
+
+There are no values of $t$ for which the system has more than one solution, and hence part (\textbf{c}) cannot be done.
+
+\section*{Question 2}
+(\textbf{a}) For square matrices of the same size, if $AB=BA$ and $BC=CB$, then $AC=CA$. \\
+False. \\
+For matrices 
+$$
+A = 
+\begin{bmatrix}
+   a_1 & a_2 \\
+   a_3 & a_4 \\
+\end{bmatrix}
+\hspace*{20px}
+B = 
+\begin{bmatrix}
+   1 & 0 \\
+   0 & 1 \\
+\end{bmatrix}
+\hspace*{20px}
+C = 
+\begin{bmatrix}
+   c_1 & c_2 \\
+   c_3 & c_4 \\
+\end{bmatrix}
+$$
+
+$$
+A\cdot B = 
+\begin{bmatrix}
+   a_1 & a_2 \\
+   a_3 & a_4 \\
+\end{bmatrix}
+\hspace*{20px}
+B\cdot A = 
+\begin{bmatrix}
+   a_1 & a_2 \\
+   a_3 & a_4 \\
+\end{bmatrix}
+\hspace*{20px}
+\therefore
+A\cdot B = B\cdot A
+$$
+
+$$
+C\cdot B = 
+\begin{bmatrix}
+   c_1 & c_2 \\
+   c_3 & c_4 \\
+\end{bmatrix}
+\hspace*{20px}
+B\cdot C = 
+\begin{bmatrix}
+   c_1 & c_2 \\
+   c_3 & c_4 \\
+\end{bmatrix}
+\hspace*{20px}
+\therefore
+C\cdot B = B\cdot C
+$$
+
+$$
+A\cdot C = 
+\begin{bmatrix}
+   a_1\cdot c_1 + a_2\cdot c_3 & a_1\cdot c_2 + a_2\cdot c_4 \\
+   a_3\cdot c_1 + a_4\cdot c_3 & a_3\cdot c_2 + a_4\cdot c_4 \\
+\end{bmatrix}
+\hspace*{20px}
+C\cdot A = 
+\begin{bmatrix}
+   a_1\cdot c_1 + a_3\cdot c_2 & a_2\cdot c_1 + a_4\cdot c_2 \\
+   a_1\cdot c_3 + a_3\cdot c_4 & a_2\cdot c_3 + a_4\cdot c_4 \\
+\end{bmatrix}
+\hspace*{20px}
+\therefore
+C\cdot B \neq B\cdot C
+$$
+\medskip
+(\textbf{b}) For any square invertible matrix $D$. \\
+$$Det((D^{-1})^2)=(Det(D)^2)^{-1}$$
+True. For any square invertible matrix $D$, we know that $D^{-1} \cdot D=I$\\
+$$
+\therefore Det(D)\cdot Det(D^{-1})=Det(I)
+\hspace*{20px}
+\therefore Det(D)\cdot Det(D^{-1})=1
+\hspace*{20px}
+\therefore Det(D)^2\cdot Det(D^{-1})^2=1^2
+$$
+$$
+\therefore
+Det(D^{-1})^2=\frac{1}{Det(D)^2}
+$$
+We also know that
+$$
+Det(A^n)=(Det(A))^n
+$$
+
+$$
+\therefore
+Det((D^{-1})^2)=(Det(D)^2)^{-1}
+$$
+\medskip
+(\textbf{c}) If the row-echelon form of a square matrix E has a row of zeros, then $Det(E)=0$.\\
+$$
+E = 
+\begin{bmatrix}
+   1 & 5 & 7 \\
+   0 & 7 & 4  \\
+   0 & 0 & 0 \\
+\end{bmatrix}
+$$
+
+For any square matrix in row echelon form such as $E$, the determinant can be calculated by multiplying down the diagonal, in the case of $E$: $1\cdot7\cdot0=0$. Therefore, for any square matrix, if a whole row is zeros, the determinant must be zero. \\
+\medskip
+(\textbf{d}) For the matrix
+$$
+F = 
+\begin{bmatrix}
+   s-1 & 1 & 2 \\
+   s^2-1 & 3 & 2  \\
+   s+1 & 1 & 2 \\
+\end{bmatrix}
+$$
+there is more than one value of $s$ for which $Det(F)=0$.\\
+False, there are no values of $s$ for which $Det(F)=0$. Calculate the determinant:
+$$
+\begin{vmatrix}
+   s-1 & 1 & 2\\
+   s^2-1 & 3 & 2\\
+   s+1 & 1 & 2\\
+\end{vmatrix}
+\hspace*{20px}
+\therefore
+(s+1)\cdot
+\begin{vmatrix}
+1 & 2 \\
+3 & 2
+\end{vmatrix}
+-1\cdot
+\begin{vmatrix}
+s-1 & 2 \\
+s^2-1 & 2
+\end{vmatrix}
++2\cdot
+\begin{vmatrix}
+s-1 & 1 \\
+s^2-1 & 3
+\end{vmatrix}
+$$
+
+$$
+\therefore
+(s+1)\cdot(-4)-(2s-2-(2s^2-2))+2\cdot(3s-3-(s^2-1))
+$$
+
+$$
+\therefore
+-6s+6s-2s^2+2s^2-4-4
+$$
+
+$$
+\therefore
+-8
+$$
+
+Since all of the $s$ terms cancel out, there are no values of $s$ for which $Det(F)=0$.
+\section*{Question 3}
+Give an example of a $3 \times 3$ matrix $A$ that is not the zero matrix such that $A=-A^T$, and $A=A^2$, or prove no such matrix exists.\\
+Let $
+A = 
+\begin{bmatrix}
+   a_1 & a_2 & a_3 \\
+   a_4 & a_5 & a_6 \\
+   a_7 & a_8 & a_9 \\
+\end{bmatrix}
+\hspace{20px}
+\therefore
+-A^T = 
+\begin{bmatrix}
+   -a_1 & -a_4 & -a_7 \\
+   -a_2 & -a_5 & -a_8 \\
+   -a_3 & -a_6 & -a_9 \\
+\end{bmatrix}
+\hspace{20px}
+\therefore
+A = 
+\begin{bmatrix}
+    0 & a_2 & a_3 \\
+   a_4 & 0 & a_6 \\
+   a_7 & a_8 & 0 \\
+\end{bmatrix}
+$ \\
+As $a_1=-a_1$, $a_5=-a_5$, $a_9=-a_9$
+$$
+A\cdot A=
+\begin{bmatrix}
+   a_2\cdot a_4 + a_3\cdot a_7  & a_3\cdot a_8 & a_2\cdot a_6 \\
+   a_6\cdot a_7 & a_2\cdot a_4 + a_6\cdot a_8 & a_3\cdot a_4 \\
+   a_4\cdot a_8 & a_2\cdot a_7 & a_3\cdot a_7 + a_6\cdot a_8 \\
+\end{bmatrix}
+$$
+But $A^2=A$ so 
+$
+A^2=
+\begin{bmatrix}
+   0 & a_3\cdot a_8 & a_2\cdot a_6 \\
+   a_6\cdot a_7 & 0 & a_3\cdot a_4 \\
+   a_4\cdot a_8 & a_2\cdot a_7 & 0 \\
+\end{bmatrix}
+$
+and hence
+
+\begin{align} 
+a_3\cdot a_8 &= a_2 \\
+a_2\cdot a_6 &= a_3 \\
+a_6\cdot a_7 &= a_4 \\ 
+a_3\cdot a_4 &= a_6 \\
+a_4\cdot a_8 &= a_7 \\
+a_2\cdot a_7 &= a_8 \\
+\end{align}
+
+These equations have no solution other than:\\
+$a_2=a_3=a_4=a_6=a_7=a_8=0 \hspace{20px} \therefore$ no such matrix exists.
+
+\section*{Question 4}
+The Albergs can only travel on the plane $$x+y+z=3$$
+The Bankrotoss can only travel on the plane $$x-y-z=2$$
+Set the Triterran planet as the origin $(0,0,0)$ and they can only set up one teleportation device that both other alien races must use. What's the closest distance from the origin that the teleportation device can be set up? \\
+\medskip
+This is a point and line problem as the planes intersect at a common line. If this system of equations were expressed in an augmented matrix, the general solution would be a line in $\mathbb{R}^3$, from there the closest distance to the origin point $(0,0,0)$ could be calculated.
+$$
+\begin{bmatrix}[ccc|c]
+  1 & 1 & 1 & 3 \\
+  1 & -1 & -1 & 2 \\
+\end{bmatrix} \overset{r_1+r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  2 & 0 & 0 & 5 \\
+  1 & -1 & -1 & 2 \\
+\end{bmatrix} \overset{r_2\cdot 2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  2 & 0 & 0 & 5 \\
+  2 & -2 & -2 & 4 \\
+\end{bmatrix} \overset{r_2-r_1}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  2 & 0 & 0 & 5 \\
+  0 & -2 & -2 & -1 \\
+\end{bmatrix} \overset{}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  1 & 0 & 0 & \frac{5}{2} \\
+  0 & 1 & 1 & \frac{1}{2} \\
+\end{bmatrix}
+$$
+ 
+Therefore, both planes intersect to form a line $y+z=\frac{1}{2}, x=\frac{5}{2}$. Now it's a line and point problem. In vector form, the line could be $$\utilde{a}=(0, 1, 1)t + \left(\frac{5}{2}, \frac{1}{2}, 0\right)$$
+
+\begin{tikzpicture}
+\draw (-4,0) -- (8,0) node[below] {Line $\utilde{a}$};
+\draw (-2,0) node[below] {A$\left(\frac{5}{2} , \frac{1}{2}, 0\right)$} -- (2, 4) node[above] {X(0, 0, 0)} -- (5, 4);
+\draw (1, 0) node[below] {B$\left(\frac{5}{2} , \frac{3}{2}, 1\right)$} -- (5, 4);
+\draw (2,0) -- (2, 4);
+\end{tikzpicture} \\
+$\overrightarrow{AX}=\left(\frac{-5}{2}, \frac{-1}{2}, 0\right)$
+and, let the gradient vector of line $\utilde{a}$ be $\overrightarrow{AB}=(0, 1, 1)$. \\
+$\therefore \norm{\overrightarrow{AX} \times \overrightarrow{AB}}$ is the size of a parallelogram with sides $\overrightarrow{AX}$ and $\overrightarrow{AB}$.
+To find the height of this parallelogram (which corresponds to the shortest perpendicular distance from the line to point $(0, 0 ,0)$), we can divide this area by the base.
+$$
+\therefore \frac{\norm{\overrightarrow{AX} \times \overrightarrow{AB}}}{\norm{\overrightarrow{AB}}} = d
+$$
+
+$$
+\therefore 
+\frac{
+\norm{\begin{vmatrix}
+   \utilde{i} & \utilde{j} & \utilde{k}\\
+   \frac{-5}{2} & \frac{-1}{2} & 0\\
+   0 & 1 & 1\\
+\end{vmatrix}
+}
+}{\sqrt{1^2+1^2}}=d
+\hspace{20px}
+\therefore
+\frac{
+\norm{\left(\frac{-1}{2}, \frac{5}{2}, \frac{-5}{2}\right)}
+}{\sqrt{2}}=d
+\hspace{20px}
+\therefore
+\frac{\sqrt{\frac{1}{4} + \frac{25}{4} + \frac{25}{4}}}{\sqrt{2}}=d
+$$
+$
+\therefore
+d=\frac{\sqrt{102}}{4}
+$ Lightyears.
+\section*{Question 5}
+Let $A$ be a $2020\cdot 2020$ matrix whose entries are $+1, -1$. Prove $Det(A)$ is divisible by $2^{2019}$.\\
+Let $A$ be a $2020\cdot 2020$ matrix, with entries ($+1, -1$).
+Take any row and add it to all the other rows, so now all rows but one have entries $+2, 0, -2$, let this matrix be $B$.\\
+$\therefore Det(B)=Det(A)$. Take a factor of $2$ out of every row but the one still with values ($1, -1$), (there are $2019$ rows with values $-2, 0, 2$).
+$$\therefore Det(A)=2^{2019}\cdot Det(B)$$ 
+$\therefore Det(A)$ is divisible by $2^{2019}$.
+\end{document}

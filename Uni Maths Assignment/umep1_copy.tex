@@ -1,0 +1,238 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, mathtools, amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\begin{document}
+UMEP Linear Algebra \hfill Felix McCuaig \\
+Assignment 1
+
+\section*{Question1}
+For the system of equations:
+
+\begin{align*}
+\begin{aligned}
+3tx + (t+12)y + (t-3)z &=& 3 \\
+3x + (t-3)y + z &=& 3t \\
+x+y+3z &=& 2 \\
+\end{aligned} \hspace*{20px}
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   3 & t-3 & 1 & 3t \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix}
+\end{align*}
+
+(a) Find the values of t for which the system is consistent.\\
+\medskip
+Display in augmented matrix form.
+Use elementary operations for row echelon form.
+$$
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   3 & t-3 & 1 & 3t \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix} \overset{r_2-3r_3}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   1 & 1 & 3 & 2 \\
+\end{bmatrix} \overset{r_3\cdot3t}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   3t & 3t & 9t & 6t \\
+\end{bmatrix}
+$$
+
+$$\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   3t & 3t & 9t & 6t \\
+\end{bmatrix} \overset{r_3-r_1}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   0 & 2t-12 & 8t+3 & 6t-3 \\
+\end{bmatrix} \overset{r_3-2r_2}{\longrightarrow} 
+\begin{bmatrix}[ccc|c]
+   3t & t+12 & t-3 & 3 \\
+   0 & t-6 & -8 & 3t-6 \\
+   0 & 0 & 8t+19 & 9 \\
+\end{bmatrix}
+$$
+Now it becomes apparent that if $t=\frac{-19}{8}$ the system is inconsistent. However, the other values of t for which the system is inconsistent are not so clear. Now if we let $A$ be the coefficient matrix, we can solve $Det(A)=0$ for $t$ we could find other values of $t$ for which the system is inconsistent. For this upper triangular matrix, we can simply multiply along the diagonal like so:
+$$
+A = 
+\begin{bmatrix}
+   3t & t+12 & t-3 \\
+   0 & t-6 & -8  \\
+   0 & 0 & 8t+19 \\
+\end{bmatrix}
+$$
+$$
+Det(A)=0 \hspace{20px}
+\therefore
+\begin{vmatrix}
+   3t & t+12 & t-3\\
+   0 & t-6 & -8\\
+   0 & 0 & 8t+19\\
+\end{vmatrix} = 0
+\hspace*{20pt}
+\therefore(8t+19)\cdot(3t)\cdot(t-6)=0 
+\hspace*{20pt}
+\therefore t=\frac{-19}{8}, 0, 6
+$$
+Hence, the system is consistent when $t \in \mathbb{R} \setminus \{\frac{-19}{8},0,6\}$ \\
+\medskip
+(b) Now, we can sub in our values for $t$ to determine if they will yield more than one solution.
+$$
+t = \frac{-19}{8}
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot\frac{-19}{8} & \frac{-19}{8}+12 & \frac{-19}{8}-3 & 3 \\
+   0 & \frac{-19}{8}-6 & -8 & 3\cdot\frac{-19}{8}-6 \\
+   0 & 0 & 8\cdot\frac{-19}{8}+19 & 9 \\
+\end{bmatrix}  
+\sim
+\begin{bmatrix}[ccc|c]
+   3\cdot\frac{-19}{8} & \frac{-19}{8}+12 & \frac{-19}{8}-3 & 3 \\
+   0 & \frac{-19}{8}-6 & -8 & 3\cdot\frac{-19}{8}-6 \\
+   0 & 0 & 0 & 9 \\
+\end{bmatrix}
+$$
+When $t=\frac{-19}{8}$ there is no solution.
+$$
+t = 6
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot6 & 6+12 & 6-3 & 3 \\
+   0 & 6-6 & -8 & 3\cdot6-6 \\
+   0 & 0 & 8\cdot6+19 & 9 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+  18 & 18 & 3 & 3 \\
+   0 & 0 & -8 & 12 \\
+   0 & 0 & 67 & 9 \\
+\end{bmatrix}
+\overset{r_2\cdot\frac{67}{8}}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  18 & 18 & 3 & 3 \\
+   0 & 0 & -67 & \frac{201}{2} \\
+   0 & 0 & 67 & 9 \\
+\end{bmatrix}
+$$
+\newpage
+When $t=6$ there is no solution.
+$$
+t = 0
+\hspace*{20pt}
+\begin{bmatrix}[ccc|c]
+   3\cdot0 & 0+12 & 0-3 & 3 \\
+   0 & 0-6 & -8 & 3\cdot0-6 \\
+   0 & 0 & 8\cdot0+19 & 9 \\
+\end{bmatrix}
+\sim
+\begin{bmatrix}[ccc|c]
+  0 & 12 & -3 & 3 \\
+   0 & -6 & -8 & -6 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+\overset{r_2\cdot2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+   0 & 12 & -3 & 3 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{r_1+r_2}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & -19 & -9 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix} \overset{r_1+r_3}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & 0 & 0 \\
+   0 & -12 & -16 & -12 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix} \overset{r_2\div4}{\longrightarrow}
+\begin{bmatrix}[ccc|c]
+  0 & 0 & 0 & 0 \\
+   0 & -3 & -4 & -3 \\
+   0 & 0 & 19 & 9 \\
+\end{bmatrix}
+$$
+$$
+\begin{aligned}
+-3y-4z&=&-3 \\
+19z&=&9
+\end{aligned}
+\hspace*{20px}
+\therefore z=\frac{9}{19}
+\hspace*{20px}
+\therefore -3y-4\cdot\frac{9}{19}= -3
+\hspace*{20px}
+\therefore -3y=\frac{-21}{19} 
+\hspace*{20px}
+\therefore y=\frac{7}{19}
+$$
+\section*{Question 2}
+(a) For square matrices of the same size, if $AB=BA$ and $BC=CB$, then $AC=CA$. \\
+True. \\
+(b) For any square invertible matrix D. \\
+(c) If the row-echelon form of a square matrix E has a row of zeros, then $Det(E)=0$.\\
+$$
+E = 
+\begin{bmatrix}
+   1 & 5 & 7 \\
+   0 & 7 & 4  \\
+   0 & 0 & 0 \\
+\end{bmatrix}
+$$
+
+For square matrices in row echelon form such as $E$, the determinant can be calculated by multiplying down the diagonal, in the case of $E$: $1\cdot7\cdot0=0$. Therefore, for any square matrix, if a whole row is zeros, the determinant must be zero. \\
+\begin{aligned}
+(d) For the matrix
+$$
+F = 
+\begin{bmatrix}
+   s-1 & 1 & 2 \\
+   s^2-1 & 3 & 2  \\
+   s+1 & 1 & 2 \\
+\end{bmatrix}
+$$
+there is more than one value of $s$ for which $Det(F)=0$.
+\end{aligned}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

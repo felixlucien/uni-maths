@@ -1,0 +1,970 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, mathtools, amssymb}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage{tikz}
+\usepackage{undertilde}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\renewcommand{\Bigg}{\bBigg@{2.5}}
+
+\begin{document}
+
+UMEP Linear Algebra \hfill Felix McCuaig \\
+Assignment 3\\
+
+\section*{Q1.} 
+Let $V$ be an inner product space with inner product 
+$\langle-,-\rangle : V \times V \rightarrow \mathbb{R}$.\\
+\smallskip
+(a) For any arbitrary $\mathbf{v} \in V$, show that the function $\varphi_\mathbf{v}: V \rightarrow \mathbb{R}$ given by\\
+$$
+\varphi_\mathbf{v}(\mathbf{w})= \langle \mathbf{v}, \mathbf{w} \rangle
+$$
+is a linear transformation.\\
+\medskip
+For linearity we must prove:\\
+
+$$
+\varphi_\mathbf{v}(\mathbf{w} + \mathbf{a})= 
+\langle \mathbf{v}, \mathbf{w} + \mathbf{a} \rangle
+= \langle \mathbf{v}, \mathbf{w}\rangle + 
+\langle \mathbf{v}, \mathbf{a} \rangle
+= \varphi_\mathbf{v}(\mathbf{w}) + \varphi_\mathbf{v}(\mathbf{a})
+$$
+And
+$$
+\varphi_\mathbf{v}(\alpha \cdot \mathbf{w})= 
+\langle \mathbf{v}, \alpha \cdot \mathbf{w} \rangle
+= \alpha \langle \mathbf{v}, \mathbf{w} \rangle
+= \alpha \varphi_\mathbf{v}(\mathbf{w})
+$$
+Therefore the inner product is a linear transformation.\\
+\smallskip
+(b) When $V = \mathbb{R}^3$, where the inner product is the usual dot product, and $\mathbf{v}=(1,2,3)$, find the matrix for the linear transformation $\varphi_\mathbf{v}$ with respect to the standard bases for $\mathbb{R}^3$ and $\mathbb{R}$.\\
+\medskip
+A matrix of dimension $1 \times 3$ could be constructed as a transformation matrix for $\varphi_\mathbf{v}$ and vectors in $\mathbb{R}^3$.\\
+$$
+\begin{bmatrix}
+	1 & 2 & 3 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+	\mathbf{w}_1 \\
+	\mathbf{w}_2 \\
+	\mathbf{w}_3 \\
+\end{bmatrix}
+$$
+(c) What can you notice about the matrix for $\varphi_\mathbf{v}$? For arbitrary vectors $\mathbf{x}$ and $\mathbf{y}$ in $\mathbb{R}^n$, how can we write down the dot product of $\mathbf{x} \cdot \mathbf{y}$ in terms of matrix multiplication?\\
+\medskip
+The matrix for $\varphi_\mathbf{v}$ is a $1\times n$ matrix where $\mathbf{v}$ is a vector in $\mathbb{R}^n$.\\
+\medskip
+The dot product can be written as:
+
+$$
+\mathbf{x}^T\cdot \mathbf{y}
+$$
+
+$$
+\begin{bmatrix}
+	\mathbf{x}_1 & \mathbf{x}_2 & \mathbf{x}_3 & \cdots & \mathbf{x}_n \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+	\mathbf{y}_1 \\
+	\mathbf{y}_2 \\
+	\mathbf{y}_3 \\
+	\vdots \\
+	\mathbf{y}_n \\
+\end{bmatrix}
+$$
+Where $x$ is a row vector of dimension $1 \times n$ and $y$ is a column vector of $n \times 1$.
+
+\section*{Q2.}
+Consider the matrix
+$$
+A = 
+\begin{bmatrix}
+	0 & 0 & -\frac{1}{2} & \frac{1}{2} \\
+	0 & 0 & -\frac{1}{2} & \frac{1}{2} \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & 0 \\
+	\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+\end{bmatrix}
+$$
+Find the eigenvalues, and associated eigenspaces of the matrix $A$. State the dimensions of the eigenspaces.\\
+\medskip
+To find the eigenvalues we must evaluate Det$(\lambda \cdot I_4-A)=0$
+$$
+\begin{bmatrix}
+	\lambda & 0 & 0 & 0 \\
+	0 & \lambda & 0 & 0 \\
+	0 & 0 & \lambda & 0 \\
+	0 & 0 & 0 & \lambda \\
+\end{bmatrix}
+-
+\begin{bmatrix}
+	0 & 0 & -\frac{1}{2} & \frac{1}{2} \\
+	0 & 0 & -\frac{1}{2} & \frac{1}{2} \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & 0 \\
+	\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\lambda & 0 & \frac{1}{2} & -\frac{1}{2} \\
+	0 & \lambda & \frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & \frac{1}{2} & \lambda & 0 \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & \lambda \\
+\end{bmatrix}
+$$
+
+$$
+\begin{vmatrix}
+	\lambda & 0 & \frac{1}{2} & -\frac{1}{2} \\
+	0 & \lambda & \frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & \frac{1}{2} & \lambda & 0 \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & \lambda \\
+\end{vmatrix}
+=
+-\frac{1}{2}
+\begin{vmatrix}
+	0 & \frac{1}{2} & -\frac{1}{2} \\
+	\lambda & \frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & \lambda & 0 \\
+\end{vmatrix}
++\frac{1}{2}
+\begin{vmatrix}
+	\lambda & \frac{1}{2} & -\frac{1}{2} \\
+	0 & \frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & \lambda & 0 \\
+\end{vmatrix}
+-\lambda
+\begin{vmatrix}
+	\lambda & 0 & \frac{1}{2} \\
+	0 & \lambda & \frac{1}{2} \\
+	\frac{1}{2} & \frac{1}{2} & \lambda \\
+\end{vmatrix}
+$$
+
+$$
+=-\frac{1}{2}
+\left(
+\frac{1}{2}
+\begin{vmatrix}
+	\frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & -\frac{1}{2} \\
+\end{vmatrix}
+-\lambda
+\begin{vmatrix}
+	0 & -\frac{1}{2} \\
+	\lambda & -\frac{1}{2} \\
+\end{vmatrix}
+\right)
++\frac{1}{2}
+\left(
+\frac{1}{2}
+\begin{vmatrix}
+	\frac{1}{2} & -\frac{1}{2} \\
+	\frac{1}{2} & -\frac{1}{2} \\
+\end{vmatrix}
+-
+\lambda
+\begin{vmatrix}
+	\lambda & -\frac{1}{2} \\
+	0 & -\frac{1}{2} \\
+\end{vmatrix}
+\right)
+-\lambda
+\left(
+\frac{1}{2}
+\begin{vmatrix}
+	0 & \frac{1}{2} \\
+	\lambda & \frac{1}{2} \\
+\end{vmatrix}
+-
+\frac{1}{2}
+\begin{vmatrix}
+	\lambda & \frac{1}{2} \\
+	0 & \frac{1}{2} \\
+\end{vmatrix}
++\lambda
+\begin{vmatrix}
+	\lambda & 0 \\
+	0 & \lambda \\
+\end{vmatrix}
+\right)
+$$
+
+$$
+=-\frac{1}{2}
+\left(
+\frac{1}{2}
+\left(
+0
+\right)
+-\lambda
+\left(
+\frac{\lambda}{2}
+\right)
+\right)
++\frac{1}{2}
+\left(
+\frac{1}{2}
+\left(
+0
+\right)
+-
+\lambda
+\left(
+-\frac{\lambda}{2}
+\right)
+\right)
+-\lambda
+\left(
+\frac{1}{2}
+\left(
+\frac{-\lambda}{2}
+\right)
+-
+\frac{1}{2}
+\left(
+\frac{\lambda}{2}
+\right)
++\lambda
+\left(
+\lambda^2
+\right)
+\right)
+$$
+
+$$
+=
+-\frac{1}{2}
+\left(
+\frac{\lambda^2}{2}
+\right)
++\frac{1}{2}
+\left(
+\frac{-\lambda^2}{2}
+\right)
+-\lambda
+\left(
+-
+\frac{\lambda}{4}
+-
+\frac{\lambda}{4}
++
+\lambda^3
+\right)
+$$
+
+$$
+=
+-\frac{\lambda^2}{4}
+-\frac{\lambda^2}{4}
+-\frac{\lambda^2}{2}
+-\lambda^4
+$$
+Then
+$$
+0=
+-\frac{\lambda^2}{2}
+-\frac{\lambda^2}{2}
+-\lambda^4
+$$
+
+$$
+0=\lambda^4-\lambda^2
+$$
+
+$$
+\therefore
+\lambda = 1, -1, 0
+$$
+Now, to find the eigenvectors we must find the nullspace of lambda matrix thing.\\
+\medskip
+When $\lambda=1$:\\
+$$
+\begin{bmatrix}[cccc|c]
+	1 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	\frac{1}{2} & \frac{1}{2} & 1 & 0 & 0 \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & 1 & 0 \\
+\end{bmatrix}
+\overset{2R_3, 2R_4}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+	1 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	1 & 1 & 2 & 0 & 0 \\
+	-1 & -1 & 0 & 2 & 0 \\
+\end{bmatrix}
+\overset{R_4+R_3}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+	1 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 0 & 2 & 2 & 0 \\
+	-1 & -1 & 0 & 2 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{R_4+(R_1+R_2)}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+	1 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 0 & 2 & 2 & 0 \\
+	0 & 0 & 1 & 1 & 0 \\
+\end{bmatrix}
+\overset{R_1-(\frac{1}{2}R_4)}{\longrightarrow}
+\begin{bmatrix}[cccc|c]
+	1 & 0 & 0 & -1 & 0 \\
+	0 & 1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 0 & 2 & 2 & 0 \\
+	0 & 0 & 1 & 1 & 0 \\
+\end{bmatrix}
+\overset{R_2-(\frac{1}{2}R_4)}{\longrightarrow}
+\begin{bmatrix}[cccc|c]
+	1 & 0 & 0 & -1 & 0 \\
+	0 & 1 & 0 & -1 & 0 \\
+	0 & 0 & 2 & 2 & 0 \\
+	0 & 0 & 1 & 1 & 0 \\
+\end{bmatrix}
+$$
+So:
+$$
+x_1=x_4, \hspace{20px} x_2=x_4, \hspace{20px} x_3=-x_4
+$$
+Let $x_4=\alpha$:
+$$
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4 \\
+\end{bmatrix}
+=
+\alpha
+\begin{bmatrix}
+	1 \\
+	1 \\
+	-1 \\
+	1 \\
+\end{bmatrix},
+\alpha \in \mathbb{R}
+\hspace{10px}
+\text{Forming a one dimensional eigenspace.}
+$$
+
+$$
+\hspace{10px}
+\text{When $\lambda=1$, the eigenvector is:} 
+\begin{bmatrix}
+	1 \\
+	1 \\
+	-1 \\
+	1 \\
+\end{bmatrix}
+$$
+
+When $\lambda=0$:\\
+$$
+\begin{bmatrix}[cccc|c]
+	0 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	0 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+	\frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+	-\frac{1}{2} & -\frac{1}{2} & 0 & 0 & 0 \\
+\end{bmatrix}
+\overset{2R_1, 2R_2, 2R_3, 2R_4}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+	0 & 0 & 1 & -1 & 0 \\
+	0 & 0 & 1 & -1 & 0 \\
+	1 & 1 & 0 & 0 & 0 \\
+	-1 & -1 & 0 & 0 & 0 \\
+\end{bmatrix}
+$$
+So:
+$$
+x_1=-x_2, \hspace{20px} x_3=x_4
+$$
+Let $x_1=\alpha$ and $x_2=\beta$:
+$$
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4 \\
+\end{bmatrix}
+=
+\alpha
+\begin{bmatrix}
+	1 \\
+	-1 \\
+	0 \\
+	0 \\
+\end{bmatrix}
++\beta
+\begin{bmatrix}
+	0 \\
+	0 \\
+	1 \\
+	1 \\
+\end{bmatrix},
+\alpha, \beta \in \mathbb{R}
+,
+\hspace{10px}
+\text{Forming a two dimensional eigenspace.}
+$$
+
+$$
+\text{When $\lambda=0$, the eigenvectors are:}
+\begin{bmatrix}
+	1 \\
+	-1 \\
+	0 \\
+	0 \\
+\end{bmatrix},
+\begin{bmatrix}
+	0 \\
+	0 \\
+	1 \\
+	1 \\
+\end{bmatrix}
+$$
+When $\lambda=-1$:
+$$
+\begin{bmatrix}[cccc|c]
+-1 & 0 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+0 & -1 & \frac{1}{2} & -\frac{1}{2} & 0 \\
+\frac{1}{2} & \frac{1}{2} & -1 & 0 & 0 \\
+-\frac{1}{2} & -\frac{1}{2} & 0 & -1 & 0 \\
+\end{bmatrix}
+\overset{2R_1, 2R_2, 2R_3, 2R_4}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+-2 & 0 & 1 & -1 & 0 \\
+0 & -2 & 1 & -1 & 0 \\
+1 & 1 & -2 & 0 & 0 \\
+-1 & -1 & 0 & -2 & 0 \\
+\end{bmatrix}
+\overset{R_3+R_4, 2R_4}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+-2 & 0 & 1 & -1 & 0 \\
+0 & -2 & 1 & -1 & 0 \\
+0 & 0 & -2 & -2 & 0 \\
+-2 & -2 & 0 & -4 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+\overset{R_3+R_4, 2R_4}{\longrightarrow} 
+\begin{bmatrix}[cccc|c]
+-2 & 0 & 1 & -1 & 0 \\
+0 & -2 & 1 & -1 & 0 \\
+0 & 0 & -2 & -2 & 0 \\
+0 & 0 & -2 & -2 & 0 \\
+\end{bmatrix}
+$$
+Then let $x_4=\alpha$:
+$$
+-2x_1+x_3-x_4=0, \hspace{20px}
+-2x_2+x_3-x_4=0, \hspace{20px}
+x_3=x_4
+$$
+
+$$
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4 \\
+\end{bmatrix}
+=
+\alpha
+\begin{bmatrix}
+	-1 \\
+	-1 \\
+	-1 \\
+	1 \\
+\end{bmatrix},
+\alpha \in \mathbb{R}
+\hspace{10px}
+\text{Forming a one dimensional eigenspace.}
+$$
+
+$$
+\hspace{10px}
+\text{When $\lambda=-1$, the eigenvector is:}
+\begin{bmatrix}
+	-1 \\
+	-1 \\
+	-1 \\
+	1 \\
+\end{bmatrix}
+$$
+
+The eigenvectors for $A$ are:
+
+$$
+\begin{bmatrix}
+	1 \\
+	1 \\
+	-1 \\
+	1 \\
+\end{bmatrix}, \begin{bmatrix}
+	-1 \\
+	-1 \\
+	-1 \\
+	1 \\
+\end{bmatrix}, \begin{bmatrix}
+	1 \\
+	-1 \\
+	0 \\
+	0 \\
+\end{bmatrix}, \begin{bmatrix}
+	0 \\
+	0 \\
+	1 \\
+	1 \\
+\end{bmatrix}
+$$
+
+\section*{Q3.}
+
+Recall that $\mathcal{P}_3$ is the vector space of polynomials of degree less than or equal to three with real coefficients, and $M^{2,2}$ is the vector space of $2\times 2$ matrices with real entries. Consider the function $T:\mathcal{P}_3 \rightarrow M^{2,2}$ given by
+$$
+T(p)=p(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+p(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+(a) Prove that $T$ is a linear transformation.\\
+\medskip
+Let there be two polynomials in $\mathcal{P}_3: p, q$.\\
+$$
+T(p+q)=
+(p+q)(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+(p+q)(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+T(p+q)=
+p(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+q(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+p(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
++
+q(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+=
+p(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+p(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
++
+q(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+q(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+=T(p)+T(q)
+$$
+And, let $\alpha \in \mathbb{R}$.\\
+$$
+T(\alpha\cdot p)=
+(\alpha\cdot p)(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+(\alpha\cdot p)(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+=
+\alpha \cdot p(1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++
+\alpha \cdot p(-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+=
+\alpha \cdot T(p)
+$$
+Therefore, $T$ is a linear transformation.\\
+\medskip
+(b) Find the matrix for the linear transformation $T$ with respect to the basis
+$$
+\mathcal{B}=
+\left\lbrace
+1, 1+x, 1+x+x^2, 1+x+x^2+x^3
+\right\rbrace
+$$
+For $\mathcal{P_3}$ and the standard basis
+$$
+\mathcal{S}=
+\left\lbrace
+\begin{bmatrix}
+	1 & 0 \\
+	0 & 0 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+	0 & 1 \\
+	0 & 0 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+	0 & 0 \\
+	1 & 0 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+	0 & 0 \\
+	0 & 1 \\
+\end{bmatrix}
+\right\rbrace
+$$
+for $M^{2,2}$.\\
+\medskip
+The transformation matrix for $T$ can be found by squashing together the basis vectors from $\mathcal{B}$ to $\mathcal{S}$.
+$$
+\left[T\right]_{B,S}
+=
+\begin{bmatrix}
+\left[ T(1) \right]_\mathcal{S} &
+\left[ T(1+x) \right]_\mathcal{S} & 
+\left[ T(1+x+x^2) \right]_\mathcal{S} &
+\left[ T(1+x+x^2+x^3) \right]_\mathcal{S}
+\end{bmatrix}
+$$
+
+Then:
+
+$$
+T(1)=
+1
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++1
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1 & 1 \\
+	-1 & -1 \\
+\end{bmatrix}
+$$
+
+$$
+T(1+x)=
+(1+1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++(1-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	2 & 0 \\
+	0 & -2 \\
+\end{bmatrix}
+$$
+
+$$
+T(1+x+x^2)=
+(1+1+1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++(1-1+1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	3 & 1 \\
+	-1 & -3 \\
+\end{bmatrix}
+$$
+
+$$
+T(1+x+x^2+x^3)=
+(1+1+1+1)
+\begin{bmatrix}
+	1 & 0 \\
+	0 & -1 \\
+\end{bmatrix}
++(1-1+1-1)
+\begin{bmatrix}
+	0 & 1 \\
+	-1 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	4 & 0 \\
+	0 & -4 \\
+\end{bmatrix}
+$$
+Therefore, when columnvectorify these matrices and squash them together:
+$$
+\left[
+T
+\right]_{\mathcal{B},\mathcal{S}}
+=
+\begin{bmatrix}
+	1 & 2 & 3 & 4 \\
+	1 & 0 & 1 & 0 \\
+	-1 & 0 & -1 & 0 \\
+	-1 & -2 & -3 & -4 \\
+\end{bmatrix}
+$$
+\medskip
+(c) What is the kernel for the linear transformation $T$? You only need to provide a brief explaination for this.\\
+\medskip
+The kernel for the linear transformation of $T$, is the nullspace of the transformation matrix, all the things which $T$ transforms to $0$.\\
+So:
+$$
+\begin{bmatrix}[cccc|c]
+	1 & 2 & 3 & 4 & 0\\
+	1 & 0 & 1 & 0 & 0\\
+	-1 & 0 & -1 & 0 & 0\\
+	-1 & -2 & -3 & -4 & 0\\
+\end{bmatrix}
+\overset{R_4+R_1,R_3+R_2}{\longrightarrow}
+\begin{bmatrix}[cccc|c]
+	1 & 2 & 3 & 4 & 0\\
+	1 & 0 & 1 & 0 & 0\\
+	0 & 0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0 & 0\\
+\end{bmatrix} 
+$$
+Let $x_4=\alpha$ and $x_3=\beta$.
+
+$$
+x_1=-x_3,\hspace{10px} x_1+2x_2+3x_3+4x_4=0
+$$
+
+$$
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4 \\
+\end{bmatrix}
+=
+\alpha
+\begin{bmatrix}
+	0 \\
+	-2 \\
+	0 \\
+	1 \\
+\end{bmatrix}
++
+\beta
+\begin{bmatrix}
+	-1 \\
+	-1 \\
+	1 \\
+	0 \\
+\end{bmatrix}
+,
+\hspace{10px}
+\alpha, \beta \in \mathbb{R}
+$$
+
+$$
+Ker(T)= span
+\left(
+\left\lbrace
+\begin{bmatrix}
+	0 \\
+	-2 \\
+	0 \\
+	1 \\
+\end{bmatrix},
+\begin{bmatrix}
+	-1 \\
+	-1 \\
+	1 \\
+	0 \\
+\end{bmatrix}
+\right\rbrace
+\right)
+$$
+
+\section*{Q4.}
+(a) use the Gram Schmidt procedure to turn $\left\lbrace 1, x, x^2 \right\rbrace$ into an orthonormal basis for $\mathcal{P}_2$, with respect to the inner product $\langle p, q \rangle = \int_{0}^{1}p(x)q(x)dx$.\\
+\medskip
+We want to transform our original basis, the standard basis $\mathcal{S}$ to a new basis $\mathcal{B}$.
+Let the original polynomial W.R.T standard basis be $a$.
+$$
+\therefore b_1=\frac{a_1}{\sqrt{\langle a_1, a_1 \rangle}}
+$$
+$$
+b_1=
+\frac{1}{\sqrt{\int_{0}^{1}1\cdot 1dx}}
+=1
+$$
+
+$$
+a_{2}^{'}=a_2-\langle a_2, b_1 \rangle b_1 
+$$
+
+$$
+\therefore
+a_{2}^{'}=x- \langle x, 1 \rangle 1 = x - \int_{0}^{1}x\cdot dx=x-\frac{1}{2}
+$$
+
+$$
+b_2=\frac{a_{2}^{'}}{\sqrt{\langle a_{2}^{'}, a_{2}^{'} \rangle}}
+= \frac{x-\frac{1}{2}}{\sqrt{\langle x-\frac{1}{2} , x-\frac{1}{2} \rangle}}
+= \frac{x-\frac{1}{2}}{\sqrt{\int_{0}^{1}x^2-x+\frac{1}{4}dx}}
+= \frac{x-\frac{1}{2}}{\sqrt{\frac{1}{12}}}
+= \sqrt{3}(2x-1)
+$$
+
+$$
+a_{3}^{'}=a_3-\langle a_2, b_1 \rangle b_1 - \langle a_3, b_2 \rangle b_2 
+$$
+
+$$
+\therefore a_{3}^{'}=
+x^2-
+\langle x^2, 1 \rangle 1
+-\langle x^2, \sqrt{3}(2x-1) \rangle \sqrt{3}(2x-1) 
+$$
+
+$$
+= x^2
+-\int_{0}^{1}x^2dx\cdot 1-\int_{0}^{1}x^2\cdot \sqrt{3}(2x-1)dx\cdot \sqrt{3}(2x-1)
+$$
+
+$$
+=x^2-x+\frac{1}{2}-\frac{1}{3}
+$$
+
+$$
+=x^2-x+\frac{1}{6}
+$$
+
+$$
+b_3
+=\frac{a_{3}^{'}}{\sqrt{\langle a_{3}^{'}, a_{3}^{'} \rangle}}
+=\frac{x^2-x+\frac{1}{6}}{\sqrt{\langle x^2-x+\frac{1}{6}, x^2-x+\frac{1}{6}\rangle}}
+=\frac{x^2-x+\frac{1}{6}}{\sqrt{\int_{0}^{1}x^4-2x^3+\frac{4x^2}{3}-\frac{x}{3}+\frac{1}{36}dx}}
+$$
+
+$$
+=\sqrt{5}(6x^2-6x+1)
+$$
+
+Our new orthonormal basis $\mathcal{B}$ is now:
+
+$$
+\left\lbrace
+1, \sqrt{3}(2x-1), \sqrt{5}(6x^2-6x+1)
+\right\rbrace
+$$
+
+(b) Prove that if $\left\lbrace \mathbf{v}_1, \cdots, \mathbf{v}_n \right\rbrace$ is an orthonormal basis for $\mathbb{R}^n$, with respect to the usual dot product, then the matrix formed by putting the columns of $\mathcal{B}$ together is orthogonal. That is, show that the matrix
+$$
+M=\left[ \mathbf{v}_1 | \mathbf{v}_2 | \cdots | \mathbf{v}_n \right]
+$$
+satisfies
+$$
+M^TM=I
+$$
+where $I$ is the $n \times n$ identity matrix.\\
+\medskip
+Since the basis is orthonormal, the dot product of columns $\mathbf{v}_n\cdot \mathbf{v}_m = 1$ if $m=n$. \\ 
+If $n\neq m$ then $\mathbf{v}_n\cdot \mathbf{v}_m=0$. We know from $\textbf{Q1}$ that $x^T \cdot y=x \cdot y$ so:
+
+$$
+M\cdot M=I_n
+$$
+
+$$
+M^T\cdot M=I_n
+$$
+
+
+\end{document}
